@@ -69,6 +69,7 @@ figdir='/Users/stnava/data/PPMI/brain_pngs/'
 demog = read.csv( "/Users/stnava/data/PPMI/brain_qc.csv" )
 demogout = "/Users/stnava/data/PPMI/brain_qc_update.csv"
 demogout2 = "/Users/stnava/data/PPMI/brain_qc_update2.csv"
+demogout3 = "/Users/stnava/data/PPMI/voice2imagequality/data/brain_qc.csv"
 print( table( demog$grade ) )
 hasqc=which( !is.na( demog$grade ) )
 noqc=which( is.na( demog$grade ) )
@@ -86,4 +87,5 @@ for ( k in sample(noqc) ) {
   print( demog[k,] )
   write.csv( demog, demogout, row.names=FALSE)
   write.csv( demog, demogout2, row.names=FALSE)
+  write.csv( demog, demogout3, row.names=FALSE)
   }

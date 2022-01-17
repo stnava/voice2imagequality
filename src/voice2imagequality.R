@@ -3,13 +3,14 @@ library( googleLanguageR )
 
 recordIt <- function( ) {
   sample_rate <- 16000
-  seconds_to_record <- 1
+  seconds_to_record <- 3
   num_channels <- 1
   reporting_interval_seconds <- 1
   # allocate buffer to record into
   buffer <- rep(NA_real_, sample_rate * seconds_to_record)
   # start recording into the buffer
-  readline(paste("press enter to record \n ") )
+  # readline(paste("press enter to record \n ") )
+  Sys.sleep(2)
   print("Begin")
   rec <- record(buffer, sample_rate, num_channels)
   for (reports in seq(reporting_interval_seconds, seconds_to_record, reporting_interval_seconds)){
@@ -67,13 +68,22 @@ get_grade_audio <- function( x ) {
 figdir='/Users/stnava/data/PPMI/brain_pngs/'
 demog = read.csv( "/Users/stnava/data/PPMI/brain_qc.csv" )
 demogout = "/Users/stnava/data/PPMI/brain_qc_update.csv"
+demogout2 = "/Users/stnava/data/PPMI/brain_qc_update2.csv"
 print( table( demog$grade ) )
+hasqc=which( !is.na( demog$grade ) )
 noqc=which( is.na( demog$grade ) )
+print( paste("HacQC:", length(hasqc),"vs",length(noqc)))
+noqc = c( noqc, sample( hasqc, 20 ) )
 for ( k in sample(noqc) ) {
   figfn=paste0( figdir, demog$id[k] )
   # mygrade = get_grade( figfn )
   mygrade = get_grade_audio( figfn )
-  demog$grade[k] = as.character( mygrade )
+  if ( is.na( demog$grade[k] ) ) {
+    demog$grade[k] = as.character( mygrade )
+  } else {
+    demog[k,'grade-repeat'] = as.character( mygrade )
+  }
   print( demog[k,] )
   write.csv( demog, demogout, row.names=FALSE)
+  write.csv( demog, demogout2, row.names=FALSE)
   }

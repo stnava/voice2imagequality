@@ -31,7 +31,7 @@ recordIt <- function( ) {
   if ( myword %in% c("hey","a")) myout='a'
   if ( myword %in% c("bee","be","c")) myout='b'
   if ( myword %in% c("see","sea","c")) myout='c'
-  if ( myword %in% c("f","eff")) myout='f'
+  if ( myword %in% c("f","eff","ff","FF","F","fail")) myout='f'
   return( unlist( c(myout, myword, myconf ) ) )
   }
 

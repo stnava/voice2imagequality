@@ -16,7 +16,7 @@ istrain = sample( 1:nrow(mydf), round(0.9*nrow(mydf)) )
 mydf$grade=factor(mydf$grade)
 mydftr=mydf[istrain,]
 mydfte=mydf[-istrain,]
-classer=FALSE
+classer=TRUE
 myform = as.formula( paste( "numericGrade ~ ", paste0( nms[c(12:15, 22:24)], collapse='+') ) )
 if ( classer )
   myform = as.formula( paste( "grade ~ ", paste0( nms[c(12:15, 22:24)], collapse='+') ) )

@@ -1,6 +1,7 @@
 library( randomForest )
 myqc = read.csv( "data/brain_qc.csv" )
 myrbp = read.csv( "data/rb_ppmi_orb.csv")
+print( table( myqc$grade ) )
 myrbp$id = tools::file_path_sans_ext( basename( myrbp$id ))
 myqc$id = tools::file_path_sans_ext( basename( myqc$id ))
 mydf = merge( myrbp, myqc, by='id' )
@@ -16,7 +17,7 @@ istrain = sample( 1:nrow(mydf), round(0.9*nrow(mydf)) )
 mydf$grade=factor(mydf$grade)
 mydftr=mydf[istrain,]
 mydfte=mydf[-istrain,]
-classer=TRUE
+classer=FALSE
 myform = as.formula( paste( "numericGrade ~ ", paste0( nms[c(12:15, 22:24)], collapse='+') ) )
 if ( classer )
   myform = as.formula( paste( "grade ~ ", paste0( nms[c(12:15, 22:24)], collapse='+') ) )
